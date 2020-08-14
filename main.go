@@ -59,7 +59,7 @@ func main() {
 	}
 
 	bFilter := filter.NewBloom(
-		4294967295,
+		200,
 		hashFunctions,
 	)
 

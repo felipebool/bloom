@@ -27,7 +27,7 @@ func (b *bloom) AddString(str string) error {
 			return err
 		}
 
-		b.hashMap.SetBit(&b.hashMap, int(index), 1)
+		b.hashMap.SetBit(&b.hashMap, int(index % b.size), 1)
 	}
 
 	return nil
@@ -40,7 +40,7 @@ func (b *bloom) CheckString(str string) (bool, error) {
 			return false, err
 		}
 
-		if b.hashMap.Bit(int(index)) == 0 {
+		if b.hashMap.Bit(int(index % b.size)) == 0 {
 			return false, nil
 		}
 	}
