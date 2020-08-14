@@ -2,9 +2,7 @@ package main
 
 import (
 	"fmt"
-	"github.com/felipebool/bloom/filter"
-	"github.com/felipebool/bloom/function"
-	"log"
+	"github.com/felipebool/bloom/pkg/bloom"
 )
 
 func getStringList() []string {
@@ -27,9 +25,9 @@ func getStringList() []string {
 	}
 }
 
-// 15 strings
-// 8 MUST NOT be in the filter
-// 7 MAY BE in the filter : )
+//// 15 strings
+//// 8 MUST NOT be in the filter
+//// 7 MAY BE in the filter : )
 func getTestStringList() []string {
 	return []string{
 		"It’s been a long day, thing you want to do is start",						// X
@@ -53,25 +51,14 @@ func getTestStringList() []string {
 func main() {
 	var present, notPresent int
 
-	hashFunctions := []func(string) (uint32, error){
-		function.HashFNV(),
-		function.HashFNVa(),
-	}
-
-	bFilter := filter.NewBloom(
-		200,
-		hashFunctions,
-	)
+	bloomBool := bloom.NewWithBoolSlice(1000)
 
 	for _, str := range getStringList() {
-		if err := bFilter.AddString(str); err != nil {
-			log.Fatal(err)
-		}
+		bloomBool.Add(str)
 	}
 
 	for _, str := range getTestStringList() {
-		isPresent, _ := bFilter.CheckString(str)
-		if isPresent {
+		if bloomBool.Check(str) {
 			present++
 			continue
 		}
