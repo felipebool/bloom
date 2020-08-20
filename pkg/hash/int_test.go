@@ -6,7 +6,7 @@ import (
 	"testing"
 )
 
-func TestAddAndCheckValues_BigInt(t *testing.T) {
+func TestAddAndCheckValues_Int(t *testing.T) {
 	testCases := map[string]struct {
 		set      []int
 		get      []int
@@ -23,9 +23,9 @@ func TestAddAndCheckValues_BigInt(t *testing.T) {
 		t.Run(name, func(t *testing.T) {
 			t.Parallel()
 
-			bigIntHash := hash.NewBigIntHash()
-			bigIntHash.SetBits(tc.set)
-			got := bigIntHash.GetValues(tc.get)
+			intHash := hash.NewIntHash(100)
+			intHash.SetBits(tc.set)
+			got := intHash.GetValues(tc.get)
 
 			require.Equal(t, len(tc.expected), len(got))
 			require.ElementsMatch(t, got, tc.expected)
