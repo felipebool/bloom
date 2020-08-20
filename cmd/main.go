@@ -49,18 +49,25 @@ func getTestStringList() []string {
 }
 
 func main() {
+	fmt.Println(runBloom(bloom.NewWithIntSlice(1000, true)))
+	fmt.Println(runBloom(bloom.NewWithIntSlice(1000, false)))
+
+	fmt.Println(runBloom(bloom.NewWithBoolSlice(1000, true)))
+	fmt.Println(runBloom(bloom.NewWithBoolSlice(1000, false)))
+
+	fmt.Println(runBloom(bloom.NewWithBigInt(1000, true)))
+	fmt.Println(runBloom(bloom.NewWithBigInt(1000, false)))
+}
+
+func runBloom(b bloom.Bloom) (int, int) {
 	var present, notPresent int
 
-	//bloomBool := bloom.NewWithBoolSlice(1000)
-	//bloomBool := bloom.NewWithIntSlice(1000)
-	bloomBool := bloom.NewWithBigInt(1000, true)
-
 	for _, str := range getStringList() {
-		bloomBool.Add(str)
+		b.Add(str)
 	}
 
 	for _, str := range getTestStringList() {
-		if bloomBool.Check(str) {
+		if b.Check(str) {
 			present++
 			continue
 		}
@@ -68,6 +75,6 @@ func main() {
 		notPresent++
 	}
 
-	fmt.Printf("Total of present strings: %d\n", present)
-	fmt.Printf("Total of not present strings: %d\n", notPresent)
+	return present, notPresent
 }
+
