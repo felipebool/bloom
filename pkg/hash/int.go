@@ -13,8 +13,8 @@ func (h intHash) SetBits(indexes []int) {
 func (h intHash) GetValues(indexes []int) []bool {
 	result := make([]bool, len(indexes))
 
-	for _, index := range indexes {
-		result = append(result, h.data[index] == 1)
+	for k, index := range indexes {
+		result[k] = h.data[index] == 1
 	}
 
 	return result

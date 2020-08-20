@@ -13,8 +13,8 @@ func (h boolHash) SetBits(indexes []int) {
 func (h boolHash) GetValues(indexes []int) []bool {
 	result := make([]bool, len(indexes))
 
-	for _, index := range indexes {
-		result = append(result, h.data[index])
+	for k, index := range indexes {
+		result[k] = h.data[index]
 	}
 
 	return result

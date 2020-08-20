@@ -51,7 +51,9 @@ func getTestStringList() []string {
 func main() {
 	var present, notPresent int
 
-	bloomBool := bloom.NewWithBoolSlice(1000)
+	//bloomBool := bloom.NewWithBoolSlice(1000)
+	//bloomBool := bloom.NewWithIntSlice(1000)
+	bloomBool := bloom.NewWithBigInt(1000)
 
 	for _, str := range getStringList() {
 		bloomBool.Add(str)

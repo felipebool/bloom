@@ -14,7 +14,7 @@ type filter struct {
 }
 
 func (f filter) GetIndexes(str string) []int {
-	result := make([]int, 3)
+	result := make([]int, 2)
 
 	index, err := hashFNV(str)
 	if err != nil {
@@ -22,7 +22,7 @@ func (f filter) GetIndexes(str string) []int {
 	}
 
 	// @FIXME this can be a problem
-	result = append(result, int(index) % f.size)
+	result[0] = int(index) % f.size
 
 	index, err = hashFNVa(str)
 	if err != nil {
@@ -30,7 +30,7 @@ func (f filter) GetIndexes(str string) []int {
 	}
 
 	// @FIXME this can be a problem
-	result = append(result, int(index) % f.size)
+	result[1] = int(index) % f.size
 
 	return result
 }
