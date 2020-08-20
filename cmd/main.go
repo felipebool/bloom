@@ -53,7 +53,7 @@ func main() {
 
 	//bloomBool := bloom.NewWithBoolSlice(1000)
 	//bloomBool := bloom.NewWithIntSlice(1000)
-	bloomBool := bloom.NewWithBigInt(1000)
+	bloomBool := bloom.NewWithBigInt(1000, true)
 
 	for _, str := range getStringList() {
 		bloomBool.Add(str)

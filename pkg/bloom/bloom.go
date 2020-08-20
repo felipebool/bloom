@@ -39,21 +39,26 @@ func (b bloom) Check(s string) bool {
 	return true
 }
 
-func NewWithBoolSlice(size int) Bloom {
-	return newBloom(hash.NewBoolHash(size), size)
+func NewWithBoolSlice(size int, withCrypto bool) Bloom {
+	return newBloom(hash.NewBoolHash(size), size, withCrypto)
 }
 
-func NewWithIntSlice(size int) Bloom {
-	return newBloom(hash.NewIntHash(size), size)
+func NewWithIntSlice(size int, withCrypto bool) Bloom {
+	return newBloom(hash.NewIntHash(size), size, withCrypto)
 }
 
-func NewWithBigInt(size int) Bloom {
-	return newBloom(hash.NewBigIntHash(), size)
+func NewWithBigInt(size int, withCrypto bool) Bloom {
+	return newBloom(hash.NewBigIntHash(), size, withCrypto)
 }
 
-func newBloom(d hash.Hash, size int) Bloom {
-	return &bloom{
-		filter: filter.NewFilter(size),
-		Data:   d,
+func newBloom(d hash.Hash, size int, withCrypto bool) Bloom {
+	b := bloom{Data: d}
+
+	if withCrypto {
+		b.filter = filter.NewCryptoFilter(size)
+		return &b
 	}
+
+	b.filter = filter.NewNonCryptoFilter(size)
+	return &b
 }
