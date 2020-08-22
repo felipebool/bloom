@@ -136,21 +136,17 @@ func newFilter(size int, f []func(str string) (uint32, error)) Filter {
 }
 
 func getCryptoFunctions() []func(str string) (uint32, error) {
-	h := make([]func(str string) (uint32, error), 3)
-
-	h[0] = hashSHA256
-	h[1] = hashMD5
-	h[2] = hashSHA1
-
-	return h
+	return []func(str string) (uint32, error){
+		hashSHA256,
+		hashMD5,
+		hashSHA1,
+	}
 }
 
 func getNonCryptoFunctions() []func(str string) (uint32, error) {
-	h := make([]func(str string) (uint32, error), 3)
-
-	h[0] = hashFNV
-	h[1] = hashFNVa
-	h[2] = hashPJW
-
-	return h
+	return []func(str string) (uint32, error){
+		hashFNV,
+		hashFNVa,
+		hashPJW,
+	}
 }
