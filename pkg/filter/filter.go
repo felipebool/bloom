@@ -83,21 +83,39 @@ func hashMD5(str string) (uint32, error) {
 	h := md5.New()
 	byteString := []byte(str)
 
-	return getResultAccordingToByteOrder(h.Sum(byteString)), nil
+	_, err := h.Write(byteString)
+	if err != nil {
+		return 0, err
+	}
+	sum := h.Sum(nil)
+	r := getResultAccordingToByteOrder(sum)
+	return r, nil
 }
 
 func hashSHA1(str string) (uint32, error) {
 	h := sha1.New()
 	byteString := []byte(str)
 
-	return getResultAccordingToByteOrder(h.Sum(byteString)), nil
+	_, err := h.Write(byteString)
+	if err != nil {
+		return 0, err
+	}
+	sum := h.Sum(nil)
+	r := getResultAccordingToByteOrder(sum)
+	return r, nil
 }
 
 func hashSHA256(str string) (uint32, error) {
 	h := sha256.New()
 	byteString := []byte(str)
 
-	return getResultAccordingToByteOrder(h.Sum(byteString)), nil
+	_, err := h.Write(byteString)
+	if err != nil {
+		return 0, err
+	}
+	sum := h.Sum(nil)
+	r := getResultAccordingToByteOrder(sum)
+	return r, nil
 }
 
 func getResultAccordingToByteOrder(value []byte) uint32 {
